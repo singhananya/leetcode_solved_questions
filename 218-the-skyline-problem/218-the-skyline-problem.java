@@ -1,34 +1,45 @@
 class Solution {
-    class Pair implements Comparable<Pair>{
-        int x;
-        int h;
-        Pair(int x,int h){
-            this.x=x;
-            this.h=h;
-        }
-        public int compareTo(Pair o){
-            if(this.x==o.x)
-                return this.h-o.h;
-            else
-                return this.x-o.x;
-        }
-    }
+    // class Pair implements Comparable<Pair>{
+    //     int x;
+    //     int h;
+    //     Pair(int x,int h){
+    //         this.x=x;
+    //         this.h=h;
+    //     }
+    //     public int compareTo(Pair o){
+    //         if(this.x==o.x)
+    //             return this.h-o.h;
+    //         else
+    //             return this.x-o.x;
+    //     }
+    // }
     public List<List<Integer>> getSkyline(int[][] buildings) {
-        List<Pair> points=new ArrayList<>();
+        int n=buildings.length;
         
-        for(int [] b:buildings){
-            int sp=b[0];
-            int ep=b[1];
-            int h=b[2];
+        int[][] arr=new int[2*n][2];
+        
+        int k=0;
+        for(int i=0; i<n; i++){
+            int sp=buildings[i][0];
+            int ep=buildings[i][1];
+            int h=buildings[i][2];
             
-            Pair sph=new Pair(sp,-h);            
-            Pair eph=new Pair(ep,h);
+            arr[k][0]=sp;
+            arr[k][1]=(-1)*h;
             
-            points.add(sph);            
-            points.add(eph);
+            k++;
+            arr[k][0]=ep;
+            arr[k][1]=h;
+            k++;
         }
         
-        Collections.sort(points);
+        Arrays.sort(arr, (int[] a, int [] b)->{
+            if(a[0]==b[0]){
+                return a[1] - b[1];
+            } else {
+                return a[0] - b[0];
+            }
+        });
         
         List<List<Integer>> ans=new ArrayList<>();
         
@@ -38,11 +49,9 @@ class Solution {
         pq.add(0);
         
         
-        for(int i=0; i<points.size(); i++){
-            Pair p=points.get(i);
-            
-            int x=p.x;
-            int h=p.h;
+        for(int i=0; i<2*n; i++){
+            int x=arr[i][0];
+            int h=arr[i][1];
             
             if(h<0){ // starting point
                 pq.add((-1)*h);
@@ -64,6 +73,5 @@ class Solution {
         }
         
         return ans;
-        
     }
 }
