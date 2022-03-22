@@ -23,7 +23,7 @@ class Solution {
         }
         for(int i=0;i<isConnected.length;i++){
             for(int j=0;j<isConnected[0].length;j++){
-                if(isConnected[i][j]==1)
+                if(isConnected[i][j]==1 && i!=j)
                 {
                     int v1=i; int v2=j;
                     graph[v1].add(new Edge(v1,v2));
