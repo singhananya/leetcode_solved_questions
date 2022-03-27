@@ -24,21 +24,24 @@ class Solution {
             par[i]=i;
             size[i]=1;
         }
+        int comp=n;
         for(int[] edge:connections){
             int u=edge[0];
             int v=edge[1];
             int p1=findPar(u);
             int p2=findPar(v);
-            if(p1!=p2)
+            if(p1!=p2){
                 merge(p1,p2);
+                comp--;
+            }
         }
-        int comp=0;
-        for(int i=0;i<n;i++)
-        {
-            int p=findPar(i);
-            if(p==i)
-                comp++;
-        }
+        // int comp=0;
+        // for(int i=0;i<n;i++)
+        // {
+        //     int p=findPar(i);
+        //     if(p==i)
+        //         comp++;
+        // }
         return comp-1;
     }
 }
